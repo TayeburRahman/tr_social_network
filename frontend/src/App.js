@@ -32,7 +32,7 @@ function App() {
     autoClose: 2500,
   });
 
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(loadUser());
@@ -57,7 +57,7 @@ function App() {
 
   return (
     <>
-      <Header /> 
+     {isAuthenticated && <Header /> }
       <Suspense fallback={<SpinLoader />} >
         <Routes>
           <Route path="/" element={

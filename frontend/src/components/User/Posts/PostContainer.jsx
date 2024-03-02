@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { clearErrors } from '../../../actions/postAction';
 import { getUserDetails } from '../../../actions/userAction';
 import { DELETE_POST_RESET, LIKE_UNLIKE_POST_RESET, NEW_COMMENT_RESET, SAVE_UNSAVE_POST_RESET } from '../../../constants/postConstants';
-import PostItem from './PostItem'
+import PostItem from './PostItem';
 
 const PostContainer = ({ posts, id }) => {
 
@@ -52,7 +52,7 @@ const PostContainer = ({ posts, id }) => {
             dispatch({ type: DELETE_POST_RESET });
         }
     }, [dispatch, success, likeError, message, commentError, commentSuccess, saveError, saveSuccess, saveMessage, deleteError, deleteSuccess]);
-
+ 
     return (
         <div className="grid grid-cols-3 gap-1 sm:gap-8 my-1 mb-8" id={id}>
             {posts?.map((post, i) => (

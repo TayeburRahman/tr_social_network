@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { clearErrors, getPostsOfFollowing } from '../../actions/postAction'
 import { LIKE_UNLIKE_POST_RESET, NEW_COMMENT_RESET, POST_FOLLOWING_RESET, SAVE_UNSAVE_POST_RESET } from '../../constants/postConstants'
+import SkeletonPost from '../Layouts/SkeletonPost'
+import SpinLoader from '../Layouts/SpinLoader'
 import UsersDialog from '../Layouts/UsersDialog'
 import PostItem from './PostItem'
 import StoriesContainer from './StoriesContainer'
-import InfiniteScroll from 'react-infinite-scroll-component';
-import SpinLoader from '../Layouts/SpinLoader'
-import SkeletonPost from '../Layouts/SkeletonPost'
 
 const PostsContainer = () => {
 
@@ -18,6 +18,7 @@ const PostsContainer = () => {
     const [usersDialog, setUsersDialog] = useState(false);
     const [page, setPage] = useState(2);
 
+    const { user } = useSelector((state) => state.user);
     const { loading, error, posts, totalPosts } = useSelector((state) => state.postOfFollowing)
     const { error: likeError, message, success } = useSelector((state) => state.likePost)
     const { error: commentError, success: commentSuccess } = useSelector((state) => state.newComment)
@@ -29,8 +30,8 @@ const PostsContainer = () => {
         if (error) {
             toast.error(error);
             dispatch(clearErrors());
-        }
-        dispatch(getPostsOfFollowing());
+        } 
+        dispatch(getPostsOfFollowing(user._id));
         dispatch({ type: POST_FOLLOWING_RESET });
     }, [dispatch, error]);
 
@@ -63,7 +64,7 @@ const PostsContainer = () => {
 
     const fetchMorePosts = () => {
         setPage((prev) => prev + 1)
-        dispatch(getPostsOfFollowing(page));
+        dispatch(getPostsOfFollowing(user._id,page));
     }
 
     return (

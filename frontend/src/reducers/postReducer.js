@@ -4,6 +4,7 @@ import { CLEAR_ERRORS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_RESET,
 // New Post Reducer
 export const newPostReducer = (state = { post: {} }, { type, payload }) => {
     switch (type) {
+        
         case NEW_POST_REQUEST:
             return {
                 ...state,

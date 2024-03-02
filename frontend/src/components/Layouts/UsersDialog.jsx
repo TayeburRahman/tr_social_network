@@ -2,7 +2,7 @@ import { Dialog } from '@mui/material'
 import UserListItem from './UserListItem'
 
 const UsersDialog = ({ open, onClose, title, usersList }) => {
-
+ 
   return (
     <Dialog open={open} onClose={onClose}>
       <div className="flex flex-col w-72 sm:w-96">

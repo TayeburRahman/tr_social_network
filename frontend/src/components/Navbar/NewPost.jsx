@@ -14,8 +14,8 @@ const NewPost = ({ newPost, setNewPost }) => {
     const navigate = useNavigate();
 
     const { loading, success, error } = useSelector((state) => state.newPost);
-    const { user } = useSelector((state) => state.user);
 
+    const { user } = useSelector((state) => state.user);
     const [postImage, setPostImage] = useState("");
     const [postPreview, setPostPreview] = useState("");
     const [caption, setCaption] = useState("");
@@ -26,16 +26,17 @@ const NewPost = ({ newPost, setNewPost }) => {
         setDragged(!dragged);
     }
 
+    
     const handleFileChange = (e) => {
         const reader = new FileReader();
         setPostImage("");
         setPostPreview("")
+
         reader.onload = () => {
             if (reader.readyState === 2) {
                 setPostPreview(reader.result);
             }
         };
-
         reader.readAsDataURL(e.target.files[0]);
         setPostImage(e.target.files[0]);
     }
@@ -51,10 +52,18 @@ const NewPost = ({ newPost, setNewPost }) => {
             return
         }
 
-        const formData = new FormData();
 
+        const formData = new FormData();
+        // const formData = {
+        //     caption: caption,
+        //     avatar: postImage,
+        //     userId: user._id,
+        // };
         formData.set("caption", caption);
-        formData.set("post", postImage);
+        formData.set("avatar", postImage);
+        formData.set("userId", user._id);
+
+        console.log('userId', formData)
 
         dispatch(addNewPost(formData));
     }
@@ -98,6 +107,7 @@ const NewPost = ({ newPost, setNewPost }) => {
                             <input
                                 type="file"
                                 accept="image/*"
+                                name="avatar"
                                 onChange={handleFileChange}
                                 className="absolute h-full w-full opacity-0" />
                         </div>

@@ -13,7 +13,7 @@ const UserListItem = ({ _id, avatar, username, name, followers }) => {
 
     const handleFollow = () => {
         setFollow(!follow);
-        dispatch(followUser(_id));
+        dispatch(followUser(_id, user._id));
     }
 
     return (

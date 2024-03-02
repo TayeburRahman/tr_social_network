@@ -9,12 +9,12 @@ const Message = ({ ownMsg, avatar, content }) => {
             :
             content === '❤️' ?
                 <div className="flex items-end gap-2 max-w-xs">
-                    <img draggable="false" className="w-7 h-7 rounded-full object-cover" src={avatar} alt="avatar" />
+                    <img draggable="false" className="w-7 h-7 rounded-full object-cover" src={`http://localhost:4000/${avatar}`} alt="avatar" />
                     <span className="items-end text-4xl">{content}</span>
                 </div>
                 :
                 <div className="flex items-end gap-2 max-w-xs">
-                    <img draggable="false" className="w-7 h-7 rounded-full object-cover" src={avatar} alt="avatar" />
+                    <img draggable="false" className="w-7 h-7 rounded-full object-cover" src={`http://localhost:4000/${avatar}`} alt="avatar" />
                     <span className="px-4 py-3 text-sm bg-gray-200 rounded-3xl max-w-xs overflow-hidden">{content}</span>
                 </div>
     )

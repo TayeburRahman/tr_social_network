@@ -21,7 +21,7 @@ const Sidebar = () => {
             toast.error(error);
             dispatch(clearErrors());
         }
-        dispatch(getSuggestedUsers());
+        dispatch(getSuggestedUsers(user._id));
     }, [dispatch, error]);
 
     useEffect(() => {

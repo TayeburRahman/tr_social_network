@@ -4,10 +4,17 @@ import { CLEAR_ERRORS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCES
 
 // New Post
 export const addNewPost = (postData) => async (dispatch) => {
-    try {
+    
+    try {  
+        
+        dispatch({ type: NEW_POST_REQUEST }); 
+          
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }
 
-        dispatch({ type: NEW_POST_REQUEST });
-        const config = { header: { "Content-Type": "application/json" } }
         const { data } = await axios.post("/api/v1/post/new", postData, config);
 
         dispatch({
@@ -24,14 +31,14 @@ export const addNewPost = (postData) => async (dispatch) => {
 }
 
 // Get Post of Followings
-export const getPostsOfFollowing = (page = 1) => async (dispatch) => {
+export const getPostsOfFollowing = (userId,page = 1) => async (dispatch) => {
     try {
 
         dispatch({ type: POST_FOLLOWING_REQUEST });
 
         setTimeout(async () => {
 
-            const { data } = await axios.get(`/api/v1/posts?page=${page}`);
+            const { data } = await axios.get(`/api/v1/${userId}/posts?page=${page}`);
 
             dispatch({
                 type: POST_FOLLOWING_SUCCESS,
@@ -49,11 +56,11 @@ export const getPostsOfFollowing = (page = 1) => async (dispatch) => {
 };
 
 // Like | Unlike Post
-export const likePost = (postId) => async (dispatch) => {
+export const likePost = (postId, userId) => async (dispatch) => {
     try {
 
         dispatch({ type: LIKE_UNLIKE_POST_REQUEST });
-        const { data } = await axios.get(`/api/v1/post/${postId}`);
+        const { data } = await axios.get(`/api/v1/post/${postId}/${userId}`);
 
         dispatch({
             type: LIKE_UNLIKE_POST_SUCCESS,
@@ -69,12 +76,12 @@ export const likePost = (postId) => async (dispatch) => {
 };
 
 // Add Comment
-export const addComment = (postId, comment) => async (dispatch) => {
+export const addComment = (postId,userId ,comment) => async (dispatch) => {
     try {
 
         dispatch({ type: NEW_COMMENT_REQUEST });
-        const config = { header: { "Content-Type": "application/json" } }
-        const { data } = await axios.post(`/api/v1/post/comment/${postId}`, { comment }, config);
+        const config = { header: { "Content-Type": "application/json" }}
+        const { data } = await axios.post(`/api/v1/post/comment/${postId}/${userId}`, { comment }, config);
 
         dispatch({
             type: NEW_COMMENT_SUCCESS,
@@ -90,11 +97,11 @@ export const addComment = (postId, comment) => async (dispatch) => {
 }
 
 // Save | Unsave Post
-export const savePost = (postId) => async (dispatch) => {
+export const savePost = (postId, userId) => async (dispatch) => {
     try {
 
         dispatch({ type: SAVE_UNSAVE_POST_REQUEST });
-        const { data } = await axios.post(`/api/v1/post/${postId}`);
+        const { data } = await axios.post(`/api/v1/post/${postId}/${userId}`);
 
         dispatch({
             type: SAVE_UNSAVE_POST_SUCCESS,
@@ -110,11 +117,11 @@ export const savePost = (postId) => async (dispatch) => {
 };
 
 // Delete Post
-export const deletePost = (postId) => async (dispatch) => {
+export const deletePost = (postId, userId) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_POST_REQUEST });
-        const { data } = await axios.delete(`/api/v1/post/${postId}`);
+        const { data } = await axios.delete(`/api/v1/post/${postId}/${userId}`);
 
         dispatch({
             type: DELETE_POST_SUCCESS,

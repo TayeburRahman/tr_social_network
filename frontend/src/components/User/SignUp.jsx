@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import TextField from '@mui/material/TextField';
-import Auth from './Auth';
-import { Link, useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { clearErrors, registerUser } from '../../actions/userAction';
 import BackdropLoader from '../Layouts/BackdropLoader';
+import Auth from './Auth';
+
 
 const SignUp = () => {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const SignUp = () => {
     const handleRegister = (e) => {
         e.preventDefault();
 
-        const userCheck = /^[a-z0-9_.-]{6,25}$/igm;
+        const userCheck = /^[a-z/0-9_.-]{6,25}$/igm;
 
         if (password.length < 8) {
             toast.error("Password length must be atleast 8 characters");
@@ -40,6 +40,8 @@ const SignUp = () => {
             toast.error("Select Profile Pic");
             return;
         }
+
+        console.log("username", username)
         if (!userCheck.test(username)) {
             toast.error("Invalid Username");
             return;
@@ -51,6 +53,7 @@ const SignUp = () => {
         formData.set("username", username);
         formData.set("password", password);
         formData.set("avatar", avatar);
+ 
 
         dispatch(registerUser(formData));
     }
@@ -89,7 +92,7 @@ const SignUp = () => {
             {loading && <BackdropLoader />}
             <Auth>
                 <div className="bg-white border flex flex-col gap-2 p-4 pt-10">
-                    <img draggable="false" className="mx-auto h-30 w-36 object-contain" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="" />
+                    <img draggable="false" className="mx-auto h-30 w-36 object-contain" src="https://i.ibb.co/CHwmZWd/logo.png" alt="" width="70%"  />
                     <form
                         onSubmit={handleRegister}
                         encType="multipart/form-data"

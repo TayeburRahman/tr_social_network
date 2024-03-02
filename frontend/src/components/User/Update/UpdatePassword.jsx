@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { clearErrors, loadUser, updatePassword } from '../../../actions/userAction';
+import { clearErrors, updatePassword } from '../../../actions/userAction';
 import { UPDATE_PASSWORD_RESET } from '../../../constants/userConstants';
 import MetaData from '../../Layouts/MetaData';
 
@@ -40,7 +40,7 @@ const UpdatePassword = () => {
         }
         if (isUpdated) {
             toast.success("Password Updated");
-            dispatch(loadUser());
+            // dispatch(loadUser());
             navigate(`/${user?.username}`);
 
             dispatch({ type: UPDATE_PASSWORD_RESET });
@@ -53,7 +53,7 @@ const UpdatePassword = () => {
 
             <form onSubmit={handlePasswordUpdate} className="flex flex-col gap-4 py-8 px-16 sm:w-3/4">
                 <div className="flex items-center gap-8 ml-24">
-                    <img draggable="false" className="w-11 h-11 rounded-full border object-cover" src={user.avatar} alt="" />
+                    <img draggable="false" className="w-11 h-11 rounded-full border object-cover" src={`http://localhost:4000/${user.avatar}`} alt="" />
                     <span className="text-2xl">{user.username}</span>
                 </div>
                 <div className="flex w-full gap-8 text-right items-center">

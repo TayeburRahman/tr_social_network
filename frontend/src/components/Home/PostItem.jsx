@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import axios from 'axios';
+import { Picker } from 'emoji-mart';
+import moment from 'moment';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ScrollToBottom from 'react-scroll-to-bottom';
 import { addComment, likePost, savePost } from '../../actions/postAction';
 import { likeFill } from '../Navbar/SvgIcons';
-import { commentIcon, emojiIcon, likeIconOutline, moreIcons, saveIconFill, saveIconOutline, shareIcon } from './SvgIcons'
-import { Picker } from 'emoji-mart'
-import ScrollToBottom from 'react-scroll-to-bottom';
-import axios from 'axios';
-import moment from 'moment';
+import { commentIcon, emojiIcon, likeIconOutline, moreIcons, saveIconFill, saveIconOutline, shareIcon } from './SvgIcons';
 
 const PostItem = ({ _id, caption, likes, comments, image, postedBy, savedBy, createdAt, setUsersDialog, setUsersList }) => {
 
@@ -31,14 +31,14 @@ const PostItem = ({ _id, caption, likes, comments, image, postedBy, savedBy, cre
 
     const handleLike = async () => {
         setLiked(!liked);
-        await dispatch(likePost(_id));
+        await dispatch(likePost(_id, user._id));
         const { data } = await axios.get(`/api/v1/post/detail/${_id}`)
         setAllLikes(data.post.likes)
     }
 
     const handleComment = async (e) => {
         e.preventDefault();
-        await dispatch(addComment(_id, comment));
+        await dispatch(addComment(_id,user._id, comment));
         setComment("");
         const { data } = await axios.get(`/api/v1/post/detail/${_id}`)
         setAllComments(data.post.comments)
@@ -46,7 +46,7 @@ const PostItem = ({ _id, caption, likes, comments, image, postedBy, savedBy, cre
 
     const handleSave = async () => {
         setSaved(!saved);
-        await dispatch(savePost(_id));
+        await dispatch(savePost(_id, user._id));
         const { data } = await axios.get(`/api/v1/post/detail/${_id}`)
         setAllSavedBy(data.post.savedBy)
     }
@@ -78,7 +78,7 @@ const PostItem = ({ _id, caption, likes, comments, image, postedBy, savedBy, cre
 
     return (
         <div className="flex flex-col border rounded bg-white relative">
-
+            
             <div className="flex justify-between px-3 py-2.5 border-b items-center">
                 <div className="flex space-x-3 items-center">
                     <Link to={`/${postedBy.username}`}><img draggable="false" className="w-10 h-10 rounded-full object-cover" src={postedBy.avatar} alt="avatar" /></Link>
@@ -97,7 +97,6 @@ const PostItem = ({ _id, caption, likes, comments, image, postedBy, savedBy, cre
 
             {/* like comment container */}
             <div className="flex flex-col px-4 space-y-1 border-b pb-2 mt-2">
-
                 {/* icons container */}
                 <div className="flex items-center justify-between py-2">
                     <div className="flex space-x-4">
@@ -137,14 +136,13 @@ const PostItem = ({ _id, caption, likes, comments, image, postedBy, savedBy, cre
                     <ScrollToBottom className="w-full h-52 overflow-y-auto py-1">
                         {allComments.map((c) => (
                             <div className="flex items-start mb-2 space-x-2" key={c._id}>
-                                <img draggable="false" className="h-7 w-7 rounded-full object-cover mr-0.5" src={c.user.avatar} alt="avatar" />
+                                <img draggable="false" className="h-7 w-7 rounded-full object-cover mr-0.5" src={`http://localhost:4000/${c?.user?.avatar}`} alt="avatar" />
                                 <Link to={`/${c.user}`} className="text-sm font-semibold hover:underline">{c.user.username}</Link>
                                 <p className="text-sm">{c.comment}</p>
                             </div>
                         ))}
                     </ScrollToBottom>
-                }
-
+                } 
             </div>
 
             {/* comment input container */}

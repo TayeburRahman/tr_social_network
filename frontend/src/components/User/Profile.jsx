@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
-import PostContainer from './Posts/PostContainer';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { clearErrors, followUser, getUserDetails } from '../../actions/userAction';
-import { clearErrors as clearChatErrors, addNewChat } from '../../actions/chatAction';
 import { toast } from 'react-toastify';
-import BackdropLoader from '../Layouts/BackdropLoader';
-import { metaballsMenu, postsIconFill, postsIconOutline, reelsIcon, savedIconFill, savedIconOutline, settingsIcon, taggedIcon } from './SvgIcons';
-import { FOLLOW_USER_RESET, USER_DETAILS_RESET } from '../../constants/userConstants';
-import UsersDialog from '../Layouts/UsersDialog';
+import { addNewChat, clearErrors as clearChatErrors } from '../../actions/chatAction';
+import { clearErrors, followUser, getUserDetails } from '../../actions/userAction';
 import { NEW_CHAT_RESET } from '../../constants/chatConstants';
-import MetaData from '../Layouts/MetaData';
+import { FOLLOW_USER_RESET } from '../../constants/userConstants';
 import NotFound from '../Errors/NotFound';
+import BackdropLoader from '../Layouts/BackdropLoader';
+import MetaData from '../Layouts/MetaData';
+import UsersDialog from '../Layouts/UsersDialog';
+import PostContainer from './Posts/PostContainer';
+import { metaballsMenu, postsIconFill, postsIconOutline, reelsIcon, savedIconFill, savedIconOutline, settingsIcon, taggedIcon } from './SvgIcons';
 
 const Profile = () => {
 
@@ -29,6 +29,8 @@ const Profile = () => {
     const { user: loggedInUser } = useSelector((state) => state.user);
     const { error: followError, success, message } = useSelector((state) => state.followUser);
     const { error: chatError, chat } = useSelector((state) => state.newChat);
+
+    console.log("user", user)
 
     const handleFollow = () => {
         // setFollow(!follow); 
@@ -106,7 +108,7 @@ const Profile = () => {
 
                         {/* profile picture */}
                         <div className="sm:w-1/3 flex justify-center mx-auto sm:mx-0">
-                            <img draggable="false" className="w-40 h-40 rounded-full object-cover" src={user.avatar} alt="" />
+                            <img draggable="false" className="w-40 h-40 rounded-full object-cover" src={`http://localhost:4000/${user.avatar}`} alt="" />
                         </div>
 
                         {/* profile details */}
@@ -145,7 +147,7 @@ const Profile = () => {
                                 <p className="font-medium">{user.name}</p>
                                 <p className="whitespace-pre-line">{user.bio}</p>
                                 {user?.website &&
-                                    <a href={user.website} target="_blank" className="text-blue-900 font-medium">{new URL(user.website).hostname}</a>
+                                    (<a href={`${user?.website}`} target="_blank" className="text-blue-900 font-medium">{new URL(user?.website).hostname}</a>)
                                 }
                             </div>
                         </div>

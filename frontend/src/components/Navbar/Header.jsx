@@ -28,8 +28,7 @@ const Header = () => {
             <div className="flex flex-row justify-between items-center py-2 px-3.5 sm:w-full sm:py-2 sm:px-4 md:w-full md:py-2 md:px-6 xl:w-4/6 xl:py-3 xl:px-8 mx-auto">
 
                 {/* <!-- logo --> */}
-                <Link to="/"><img draggable="false" className="mt-1.5 w-full h-full object-contain" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="" /></Link>
-
+                <Link to="/"><img draggable="false" className="   h-full object-contain" src="https://i.ibb.co/CHwmZWd/logo.png" alt="" width="70%" /></Link>
                 <SearchBox />
 
                 {/* <!-- icons container  --> */}

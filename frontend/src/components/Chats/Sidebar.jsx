@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { clearErrors, getAllChats } from '../../actions/chatAction';
 import ChatListItem from './ChatListItem';
-import SkeletonUserItem from '../Layouts/SkeletonUserItem';
-import { Skeleton } from '@mui/material';
 
 const Sidebar = ({ openModal, socket }) => {
 
@@ -20,7 +18,7 @@ const Sidebar = ({ openModal, socket }) => {
             toast.error(error);
             dispatch(clearErrors());
         }
-        dispatch(getAllChats());
+        dispatch(getAllChats(user._id));
     }, [dispatch, error, params.chatId]);
 
     return (

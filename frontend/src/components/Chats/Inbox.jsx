@@ -1,19 +1,19 @@
+import { Picker } from 'emoji-mart';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { io } from 'socket.io-client';
 import { clearErrors, getAllMessages, sendMessage } from '../../actions/messageAction';
 import { getUserDetailsById } from '../../actions/userAction';
 import { ALL_MESSAGES_ADD, NEW_MESSAGE_RESET } from '../../constants/messageConstants';
-import { SOCKET_ENDPOINT } from '../../utils/constants';
-import Sidebar from './Sidebar';
-import { io } from 'socket.io-client';
-import Message from './Message';
-import { Picker } from 'emoji-mart'
-import SearchModal from './SearchModal';
-import SpinLoader from '../Layouts/SpinLoader';
-import MetaData from '../Layouts/MetaData';
 import { USER_DETAILS_RESET } from '../../constants/userConstants';
+import { SOCKET_ENDPOINT } from '../../utils/constants';
+import MetaData from '../Layouts/MetaData';
+import SpinLoader from '../Layouts/SpinLoader';
+import Message from './Message';
+import SearchModal from './SearchModal';
+import Sidebar from './Sidebar';
 
 const Inbox = () => {
 
@@ -159,6 +159,8 @@ const Inbox = () => {
         setShowSearch(true);
     }
 
+    console.log('friend', friend)
+
     return (
         <>
             <MetaData title="Instagram • Chats" />
@@ -185,7 +187,7 @@ const Inbox = () => {
                             <div className="flex py-3 px-6 border-b items-center justify-between">
                                 <div className="flex gap-2 items-center">
                                     <div className="w-8 h-8 relative">
-                                        <img draggable="false" loading="lazy" className="w-full h-full rounded-full object-cover" src={friend.avatar} alt="avatar" />
+                                        <img draggable="false" loading="lazy" className="w-full h-full rounded-full object-cover" src={`http://localhost:4000/${friend?.avatar}`} alt="avatar" />
                                         {isOnline && <div className="absolute -right-0.5 -bottom-0.5 h-3 w-3 bg-green-500 rounded-full"></div>}
                                     </div>
                                     <span className="font-medium cursor-pointer">{friend.name}</span>
@@ -206,7 +208,7 @@ const Inbox = () => {
                                 {isTyping &&
                                     <>
                                         <div className="flex items-center gap-3 max-w-xs">
-                                            <img draggable="false" loading="lazy" className="w-7 h-7 rounded-full object-cover" src={friend.avatar} alt="avatar" />
+                                            <img draggable="false" loading="lazy" className="w-7 h-7 rounded-full object-cover" src={`http://localhost:4000/${friend?.avatar}`} alt="avatar" />
                                             <span className="text-sm text-gray-500">typing...</span>
                                         </div>
                                         <div ref={scrollRef}></div>
